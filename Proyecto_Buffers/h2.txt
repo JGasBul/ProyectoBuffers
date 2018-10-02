@@ -1,0 +1,7 @@
+casa
+moto
+bici
+casa
+bici
+mierda
+bici
