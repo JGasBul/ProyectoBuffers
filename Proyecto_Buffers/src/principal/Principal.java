@@ -13,10 +13,11 @@ public class Principal {
 		GestionDatos model = new GestionDatos();
 		
 		LaunchView view = new LaunchView();
+		Libreria l = new Libreria();
 		view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		view.setVisible(true);
 		
-		GestionEventos controller = new GestionEventos(model,view);
+		GestionEventos controller = new GestionEventos(model,view,l);
 		controller.contol();
 		
 	}

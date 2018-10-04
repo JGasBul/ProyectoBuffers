@@ -1,4 +1,7 @@
+package model;
 import java.io.Serializable;
+
+import view.Libreria;
 
 public class Libro implements Serializable{
 	private int año_publi,n_pg;
@@ -51,6 +54,8 @@ public class Libro implements Serializable{
 		this.editor = editor;
 	}
 	public void print() {
+		Libreria lib=new Libreria();
+
 		System.out.println("******************************************************************");
 		System.out.println("Identificador: "+this.id);
 		System.out.println("Título: "+this.titulo);

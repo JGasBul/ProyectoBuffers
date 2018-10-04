@@ -11,11 +11,15 @@ public class GestionEventos {
 
 	private GestionDatos model;
 	private LaunchView view;
-	private ActionListener actionListener_comparar, actionListener_buscar;
+	private Libreria lib;
+	private ActionListener actionListener_comparar, actionListener_buscar,actionListener_LibrosInterfaz,actionListener_enviar;
+	private ActionListener actionListener_recoger;
+	private ActionListener actionListener_recogerTodos;
 
-	public GestionEventos(GestionDatos model, LaunchView view) {
+	public GestionEventos(GestionDatos model, LaunchView view, Libreria l) {
 		this.model = model;
 		this.view = view;
+		this.lib = l;
 	}
 
 	public void contol() {
@@ -32,6 +36,43 @@ public class GestionEventos {
 			}
 		};
 		view.getBuscar().addActionListener(actionListener_buscar);
+		actionListener_LibrosInterfaz=new ActionListener() {
+
+			public void actionPerformed(ActionEvent actionEvent) {
+				call_Libreria();
+			}
+		};
+		view.getBtnLibros().addActionListener(actionListener_LibrosInterfaz);
+		actionListener_enviar=new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				call_Enviar();
+			}
+
+		};
+		lib.getBtnEnviar().addActionListener(actionListener_enviar);
+
+		actionListener_recoger=new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				call_Recoger();
+			}
+
+		};
+		lib.getBtnIDR().addActionListener(actionListener_recoger);
+		actionListener_recogerTodos=new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				call_RecogerTodos();
+			}
+
+		};
+		lib.getBtnIDR().addActionListener(actionListener_recogerTodos);
+
+
 	}
 
 	private void call_compararContenido() {
@@ -62,6 +103,26 @@ public class GestionEventos {
 		} catch (IOException e) {
 			view.showError("Va mal");
 		}
+
+
+	}
+	private void call_Libreria() {
+		lib.setVisible(true);
+	}
+	private void call_Enviar() {
+		if(model.enviar(lib)) {
+			lib.getTextResult().setText("Libro guardado correctamente");
+		}else {
+			lib.getTextResult().setText("Error al guardar");
+		} 
+	}
+	private void call_Recoger() {
+		if(model.recuperar_libro(lib.getTextIDR().getText())!=null) {
+			Libro l=model.recuperar_libro(lib.getTextIDR().getText());
+			l.print();
+		}
+	}
+	private void call_RecogerTodos() {
 
 
 	}

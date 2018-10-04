@@ -3,6 +3,8 @@ package view;
 import java.awt.Dimension;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class LaunchView extends JFrame {
 
@@ -13,6 +15,7 @@ public class LaunchView extends JFrame {
 	private JCheckBox primera;
 
 	private JPanel panel;
+	private JButton btnLibros;
 
 	public LaunchView() {
 
@@ -53,6 +56,10 @@ public class LaunchView extends JFrame {
 		// Añadimos el JPanel al JFrame
 		this.getContentPane().add(panel);		
 
+		btnLibros = new JButton("Libros");
+
+		panel.add(btnLibros);
+
 	}	
 
 	public JButton getComparar() {
@@ -73,6 +80,14 @@ public class LaunchView extends JFrame {
 
 	public JTextArea getTextArea() {
 		return textArea;
+	}
+
+	public JButton getBtnLibros() {
+		return btnLibros;
+	}
+
+	public void setBtnLibros(JButton btnLibros) {
+		this.btnLibros = btnLibros;
 	}
 
 	public void setTextArea(JTextArea textArea) {

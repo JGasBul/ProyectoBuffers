@@ -1,12 +1,20 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import view.Libreria;
 
 public class GestionDatos {
-
 	public GestionDatos() {
 
 	}
@@ -91,6 +99,54 @@ public class GestionDatos {
 
 
 		return result;
-	}	
+	}
+	public boolean enviar(Libreria lib) {
+		String ID=lib.getTextID().getText();
+		String Titulo=lib.getTextTitulo().getText();
+		String Autor=lib.getTextAutor().getText();
+		int Año_publi=Integer.parseInt(lib.getTextAño().getText().trim());
+		String Editor=lib.getTextEditor().getText();
+		int num_pg=Integer.parseInt(lib.getTextNumPg().getText().trim());
 
+		Libro libro=new Libro(ID,Año_publi,num_pg,Titulo,Autor,Editor);
+
+		boolean fin=true;
+		ObjectOutputStream out=null;
+		try {
+			out=new ObjectOutputStream(new FileOutputStream(libro.getId()+".dat"));
+			out.writeObject(libro);
+			out.close();
+		} catch (IOException e) {
+			fin=false;
+		}
+		return fin;
+
+	}
+	public Libro recuperar_libro(String identificador) {
+		Libro l=null;
+		ObjectInputStream in=null;
+		try {
+			in=new ObjectInputStream(new FileInputStream(identificador+".dat"));
+			l=(Libro) in.readObject();
+			in.close();
+		} catch (IOException e) {
+			l=null;
+		} catch (ClassNotFoundException e) {
+			l=null;
+		}
+		return l;
+	}
+	public void recuperar_todos(){
+		File file=new File("libros");
+		ArrayList<Libro> libros =new ArrayList<Libro>();
+
+
+
+		Iterator it=libros.iterator();
+		while(it.hasNext()) {
+			Libro l=(Libro) it.next();
+			l.print();
+		}
+
+	}
 }
